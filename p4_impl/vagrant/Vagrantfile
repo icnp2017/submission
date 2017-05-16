@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+
+  # This is to avoid "stdin is not tty" error message
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+
+  config.vm.synced_folder "../", "/vagrant_lpm"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+  end
+
+  # Here you can change the configure flags for behavioral model,
+  # e.g., to enable remote debugger.
+  config.vm.provision "shell", path: "install_dependencies.sh",
+    env: {"BEHAVIORAL_MODEL_CONFIGURE_FLAGS" => "--without-targets"}
+end
