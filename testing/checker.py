@@ -250,21 +250,5 @@ def optimize_lpm_oi(input_files):
     do_optimize_lpm_oi(input_files, OI_PARAMS)
 
 
-@greet.command()
-@click.argument('input_files', nargs=-1)
-@click.option('--bit-width', help='Required bit width', type=int, multiple=True)
-@click.option('--without-oi', help='Disable OI calculation', is_flag=True)
-@click.option('--without-oi-lpm', help='Disable OI calculation', is_flag=True)
-@click.option('--without-oi-exact', help='Disable OI exact calculation', is_flag=True)
-def optimize_for_paper(input_files, bit_width, without_oi, without_oi_lpm, without_oi_exact):
-    for bw in bit_width:
-        if not without_oi:
-            do_optimize_oi(input_files, OI_PARAMS._replace(bit_width=bw))
-        if not without_oi_lpm:
-            do_optimize_oi_lpm_joint(input_files, OI_PARAMS._replace(bit_width=bw), LPM_PARAMS)
-        if not without_oi_exact:
-            do_optimize_oi(input_files, OI_PARAMS._replace(bit_width=bw, only_exact=True))
-
-
 if __name__ == '__main__':
     greet()
